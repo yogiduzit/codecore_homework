@@ -54,7 +54,7 @@ function boxIt(messageArr) {
   box += "\n" + drawBottomBorder(greatestLength);
   return box;
 }
- console.log(boxIt(convertCSV(process.argv[2])))  //For CSV file
+ console.log(boxIt(process.argv[2]))  //For CSV file
 // console.log(boxIt(process.argv.slice(2))); For normal arguments passed
 
 
