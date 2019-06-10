@@ -1,0 +1,35 @@
+@import url(homepage.css);
+
+section {
+  display: flex;
+  flex-flow: column wrap;
+}
+#newQues {
+  font-size: 2em;
+}
+section > * {
+  padding-left: 50px;
+}
+#form-container {
+  width: 25vw;
+}
+form {
+  display: flex;
+  flex-flow: row wrap; 
+  justify-content: space-between;
+  align-content: space-around;
+  height: 30vh;
+}
+input[type="text"] {
+  width: 20vw;
+}
+textarea {
+  width: 20vw;
+}
+input[type="submit"] {
+  width: 10vw;
+  height: 7vh !important;
+  background-color: black;
+  color: white;
+  font-size: 1.7em;
+}
