@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Thasadith&display=swap');
+body {
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: url('../assets/hero-lightsaber.jpg') center no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  color: aliceblue;
+  font-family: 'Thasadith';
+  margin: 0;
+}
+h2 {
+  color: aliceblue;
+  font-family: 'Thasadith';
+  margin: 0;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+img {
+  height: 300px;
+  width: 300px;
+}
+article {
+  display: flex;
+  flex-direction: row;
+  min-height: 50vh;
+  align-items: center;
+  justify-content: center;
+}
+.item {
+  min-height: 50vh;
+  width: 50%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.b-text {
+  order: 0;
+}
+footer {
+  display: flex;
+  height: 50vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+article .item h2 {
+  font-family: 'Staatliches';
+  font-size: 4em;
+  color: black;
+}
+@media only screen and (max-width: 992px) {
+  article {
+    flex-flow: row wrap;
+  }
+  .item {
+    width: 100vh;
+  }
+  .b-text {
+    order: 1;
+  }
+}
+
+
