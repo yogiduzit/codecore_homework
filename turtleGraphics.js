@@ -116,8 +116,8 @@ class Turtle {
  }
 function stretch() {
   if (process.argv[3]) {
-    var strings = process.argv[3].split("-");
-    let newTurtle = new Turtle(parseInt(strings[0][1]), parseInt(strings[0][3]));
+    let strings = process.argv[3].split("-");
+    const newTurtle = new Turtle(parseInt(strings[0][1]), parseInt(strings[0][3]));
     for (let i = 1; i < strings.length; i++) {
       if (strings[i].startsWith("f")) {
         newTurtle.forward(parseInt(strings[i].slice(1)));
