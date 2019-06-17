@@ -58,7 +58,7 @@ LEFT JOIN projects on students.id = projects.student_id
 WHERE projects.created_at IS NULL;
 
 
-/*List the average course for each course with higher averages on top displaying the course title and score average*/
+/* List the average course for each course with higher averages on top displaying the course title and score average */
 SELECT title, round(avg(enrolments.score)) AS avg_score FROM 
 courses INNER JOIN enrolments ON enrolments.course_id = courses.id
 GROUP BY title ORDER BY AVG(score) DESC;
@@ -71,5 +71,3 @@ WHERE registration_date = (SELECT max(registration_date) FROM students);
 -- List all courses with at least 5 enrolled students
 -- Show course title and number of students
 -- Order by number of students
-
-SELECT title, 
