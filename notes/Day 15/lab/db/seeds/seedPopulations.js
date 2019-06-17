@@ -8,6 +8,7 @@ exports.seed = function(knex, Promise) {
   return knex('populations').del()
     .then(function () {
       // Inserts seed entries
+      let string = knex('countries').select('id').where({countryName: })
       return knex('populations').insert(newCountries);
     });
 };
