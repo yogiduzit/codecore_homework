@@ -1,0 +1,6 @@
+[
+  { "completed": true, "name": "Feed the raptops" },
+  { "completed": false, "name": "Have lunch" },
+  { "completed": false, "name": "Go see Deadpool 2" },
+  { "completed": false, "name": "Write a script to fix the climate" }
+]
