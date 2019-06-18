@@ -2,7 +2,7 @@ const readline = require('readline');
 const fs = require('fs');
 
 const greeting = 'Welcome to Todo CLI!\n--------------------';
-const options = '(v) View \u2022 (n) New \u2022 (cX) Complete \u2022 (dX) Delete \u2022 (q) Quit';
+const options = '(v) View \u2022 (n) New \u2022 (cX) Complete \u2022 (dX) Delete \u2022 (s) Save \u2022 (q) Quit';
 const checked = ' [\u2713] ';
 const unchecked = ' [ ] ';
 
@@ -14,7 +14,9 @@ const tasks = [];
 
 console.log(greeting);
 console.log(options);
+
 scanner.on('line', data => {
+
   switch(data[0]) {
     case 'v':
 
@@ -46,8 +48,22 @@ scanner.on('line', data => {
 
       scanner.close();
       break;
-  }
-});
+
+    case 's':
+      if (process.argv[3]) {
+        saveFile(process.argv[3]);
+      } else {
+        scanner.question("Where\n", answer => {
+          saveFile(answer);
+        });
+      }
+      break;
+
+    case 'a': 
+      console.log(JSON.stringify(tasks));
+      break;
+    }
+  });
 
 scanner.on('close', () => {
   console.log("See you soon 😁");
@@ -59,6 +75,7 @@ function createTaskObj(string) {
     name: string
   };
 }
+
 function printTasks() {
   if (tasks.length === 0) {
     return 'List is empty...';
@@ -74,6 +91,7 @@ function printTasks() {
   }
   return message;
 }
+
 function completeTask(code) {
   const index = parseInt(code);
 
@@ -81,12 +99,20 @@ function completeTask(code) {
   
   console.log('Completed "' + tasks[index].name + '"');
 }
+
 function deleteTask(code) {
   const index = parseInt(code);
   const name = tasks[index].name;
 
   tasks.splice(index, 1);
   console.log("Deleted" + " \"" + name + "\"");
+}
+
+function saveFile(path) {
+  fs.writeFile(path, JSON.stringify(tasks), (err) => {
+    if (err) throw err;
+    console.log(`Saved ${path}`);
+  });
 }
 
 if (process.argv[2]) {
