@@ -1,0 +1,16 @@
+<%- include("./partials/header.ejs")%>
+<%- include("./partials/navbar.ejs")%>
+<main>
+  <form>
+    <label>Enter Year</label>
+    <input type="number" name="year" placeholder="Year">
+    <input type="submit" placeholder="Send">
+    <h1>The car is <%= age %></h1>
+    <select name="year">
+    <% for (let i = 0; i < 75; i++) {%>
+    <% let b = 1950 + i %>
+      <option value><% 1950 + i%></option>
+    <% } %>
+  </form>
+</main>
+<%- include("./partials/footer.ejs")%>

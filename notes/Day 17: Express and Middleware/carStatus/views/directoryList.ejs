@@ -1,0 +1,19 @@
+<%- include("./partials/header.ejs")%>
+<%- include("./partials/navbar.ejs")%>
+<main>
+  <div>
+    <ul>
+      <% for (let key in contents) { %>
+          <li>Found</li>
+          <% if (key instanceof Object) { %>
+            <ul>
+              <% for (let keye in key) { %>
+              <li>Found</li>
+              <% } %>
+              </ul>
+          <% } %>
+      <% } %>
+    </ul>
+  </div>
+</main>
+<%- include("./partials/footer.ejs")%>

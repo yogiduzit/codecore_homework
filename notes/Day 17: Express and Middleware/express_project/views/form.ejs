@@ -1,0 +1,36 @@
+<%- include("./partials/header")%>
+<main id="contact-us">
+  <h2>Contact us! :D</h2>
+  <form action="/thanks">
+    <div>
+      <label for="fullName">What is your name?</label> </br>
+      <input id="full-name" type="text" name="fullName" />
+    </div>
+    <div>
+      <label for="favouriteColor">What is your favourite color?</label> </br>
+      <input id="favorite-color" type="text" name="favouriteColor" />
+    </div>
+    <div>
+      <label for="message">Leave a message!</label> </br>
+      <textarea id="message" type="text" name="message"></textarea>
+    </div>
+    <div>
+      <% const days = [
+            "Monday",
+            "Tuesday",
+            "Wednsday",
+            "THrusday",
+            "firday",
+            "saturday",
+            "sunday"
+          ]
+          %>
+      <% for (let option of days) { %>
+      <input type="radio" name="day" value="<%= option %>" />
+      <label for=<%= option %>><%= option %></label>
+      <% } %>
+    </div>
+    <input id="submit" type="submit" value="Send">
+  </form>
+</main>
+<%- include("./partials/footer")%>
