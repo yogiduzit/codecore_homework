@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  <nav>
+  <a href="/welcome">This page</a>
+  <a href="/">That page</a>
+  <a href="/thanks">The one page</a>
+  <% if (!username) {%>
+    <form method="POST" action="/sign_in"> <!-- Instead of doing a get request, we do a post request to actually enter some data-->
+      <label for="userName">User Name</label>
+      <input type="text" name="userName" id="user-name" placeholder="Enter Username">
+      <input type="submit" value="Sign In">
+    </form>
+    <% } else { %>
+    <form action="/sign_out" method = "POST">
+      <input type="submit" value="Sign Out">
+    </form>
+    <% } %>
+    </nav>

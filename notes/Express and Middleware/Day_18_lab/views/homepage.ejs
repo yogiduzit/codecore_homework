@@ -1,0 +1,13 @@
+<% -include("./partials/header")%>
+<main>
+  <% if (lang && name) {%>
+    <%if (lang === "English") {%>
+      <h1>Hello <%= name %> </h1>    
+    <%} else if (lang === "Spanish") { %>
+      <h1>Hola <%= name %> </h1>    
+    <%} else if (lang === "French") { %>
+    <h1>Bonjour <%= name %> </h1>    
+    <%}%>
+    <%} %> 
+</main>
+<% -include("./partials/footer")%>
