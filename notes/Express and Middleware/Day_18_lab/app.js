@@ -23,6 +23,25 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.render("todoList");
+});
+app.get('/add_reminder', (req, res) => {
+  res.render("addReminder");
+});
+app.post('/add_reminder', (req, res) => {
+
+});
+
+app.listen(PORT, ADDRESS, () => {
+  console.log(`Server listening at ${ADDRESS}:${PORT}`);
+})
+
+app.set('views', 'views');
+app.set('view engine', 'ejs');
+
+
+/* Language Lab
 app.post("/choose_options", (req, res) => {
   const language = req.body.language;
   const name = req.body.name;
@@ -40,10 +59,6 @@ app.get("/", (req, res) => {
   const name = res.locals.name;
   res.render("homepage", {lang: lang, name: name});
 });
+*/
 
-app.listen(PORT, ADDRESS, () => {
-  console.log(`Server listening at ${ADDRESS}:${PORT}`);
-})
-
-app.set('views', 'views');
-app.set('view engine', 'ejs');
+// console.log(process.env.PORT);
