@@ -88,6 +88,7 @@ alphs.push(gets.chomp)
 
 # Ask the user for a number x and then print the first x prime numbers.
 
+
 puts "Enter a number"
 NUM_OF_PRIMES = gets.chomp.to_i
 
@@ -96,8 +97,8 @@ num = 2
 while true
   count = 0
   for a in 2..(num / 2)
-    if (num % a == 0)
-      count += 1;
+    if num % a == 0
+      count += 1
     end
   end
   if count == 0
@@ -108,3 +109,21 @@ while true
   break if i >= NUM_OF_PRIMES
 end
 
+
+
+# Use until loop to print 5 to 15
+=begin
+i = 5
+until i > 15
+  puts i
+  i += 1
+end
+=end
+
+# Find out how to get PI in Ruby and then write a formula using that to convert degrees to radian.
+=begin
+puts "Enter degrees"
+degs = gets
+
+puts "Radians: " + (degs.to_i * (Math::PI / 180)).round(2).to_s
+=end
