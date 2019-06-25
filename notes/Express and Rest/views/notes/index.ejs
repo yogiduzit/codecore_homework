@@ -1,0 +1,8 @@
+<% -include('../partials/header') %>
+<% for (let note of notes) { %>
+  <div>
+    <h2><%= note.id %> - <%= note.title %></h2>
+    <p><%= note.body %></p>
+  </div>
+<% } %>
+<% -include('../partials/footer') %>

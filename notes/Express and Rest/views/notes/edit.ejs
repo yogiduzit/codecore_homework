@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+<form action="/notes/<%= note.id%>" method="POST">
+<%# We are not going to use the POST method %>
+  <div>
+    <input type="text" name="Title" placeholder="Title" value=<%= note.title%>>
+  </div>
+
+  <div>
+    <textarea name="body" id="" cols="60" rows="8"> <%= note.body%></textarea>
+  </div>
+  <input type="hidden" name="_method" value="PATCH"> 
+  <%#The above line is used to add the method we want to use in the request body
+   This mimics a PATCH request with the methodOverride middleware.%>
+  <input type="submit">
+</form>
+<%- include('../partials/footer') %>

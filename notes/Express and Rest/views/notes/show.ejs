@@ -1,0 +1,8 @@
+<% -include('../partials/header') %>
+<h2> <%= note.id%> - <%= note.title %></h2>
+<p> <%= note.body %></p>
+<form action="/notes/<%= note.id %>" method='POST'>
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete">
+</form>
+<% -include('../partials/footer') %>
