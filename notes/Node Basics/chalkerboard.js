@@ -1,4 +1,6 @@
 const colors = require('colors/safe');
+const chalk = require('chalk');
+
 
 const color = "bg" + process.argv[2];
 const height = process.argv[3];
@@ -39,5 +41,4 @@ function drawEvenLine(width) {
   string += "\n";
   return string;
 }
-
 console.log(chessboard);
