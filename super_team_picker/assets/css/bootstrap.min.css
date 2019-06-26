@@ -3674,9 +3674,9 @@ input[type=submit].btn-block {
 
 .btn-group-vertical>.btn,
 .btn-group>.btn {
-  position: relative;
+  position: relative; 
   -ms-flex: 1 1 auto;
-  flex: 1 1 auto
+  flex: 1 1 auto;
 }
 
 .btn-group-vertical>.btn:hover,
