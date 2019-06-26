@@ -40,3 +40,7 @@ hash = {'BC' => ['Vancouver', 'Richmond'], 'AB' => ['Calgary', 'Edmonton']};
 hash.each do |province, value|
   puts "#{province}: #{value.join(', ')}"
 end
+
+city_hash = {
+  vancouver => 2135201
+}
