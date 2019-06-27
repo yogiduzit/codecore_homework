@@ -39,21 +39,25 @@ router.post('/new', (req, res) => {
 //
 router.get('/', (req, res) => {
   knex
-  .select('cohort_name', 'members.name')
+  .select('cohort_name', 'members.name', "imgURL")
   .from('members')
   .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
   .then(allMembersWithCohorts => {
     const orderedCohorts = {};
 
+    let i = 0;
     for (let member of allMembersWithCohorts) {
       if (!orderedCohorts[member.cohort_name]) {
-        orderedCohorts[member.cohort_name] = [member.name];
+        orderedCohorts[member.cohort_name] = {members: [member.name], imgURL: member.imgURL};
       } else {
-        orderedCohorts[member.cohort_name].push(member.name);
+        orderedCohorts[member.cohort_name]["members"].push(member.name);
+      }
+      i++;
+      if (i == allMembersWithCohorts.length - 1) {
+        res.render('pages/cohorts', {orderedCohorts});
       }
     }
-  
-    res.render('pages/cohorts', {orderedCohorts});
+    
   });
 });
 
