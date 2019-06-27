@@ -1,11 +1,15 @@
+require './helper_methods.rb'
+
 class Cat
+  include HelperMethods
+  
   def initialize(name)
     @name = name
   end
 
   def catch(bird)
     puts "Come here bird! Let me see how your guts taste like 😽 😽 😽 😽 😽"
-    if (rand(1..2) == 1)
+    if (random_number(1..2) == 1)
       puts "Gotcha Birdy"
     else
       puts "😿 😿 😿 😿 😿 😿"
