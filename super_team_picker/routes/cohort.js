@@ -52,13 +52,42 @@ router.get('/', (req, res) => {
       } else {
         orderedCohorts[member.cohort_name]["members"].push(member.name);
       }
-      i++;
+      
       if (i == allMembersWithCohorts.length - 1) {
         res.render('pages/cohorts', {orderedCohorts});
       }
+      i += 1; 
     }
     
   });
 });
+
+router.get('/:id', (req, res) => {
+  knex
+  .select('cohort_name', 'members.name', "imgURL")
+  .from('members')
+  .where('cohorts.id', req.params.id)
+  .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
+  .then(cohortMembers => {
+    const cohort = {
+      members: []
+    };
+    let i = 0;
+    for (let member of cohortMembers) {
+      cohort["members"].push(member.name);
+      
+      if (i == cohortMembers.length - 1) {
+        cohort["imgURL"] = member.imgURL;
+        cohort["cohortName"] = member.cohort_name;
+
+        res.send("<div>Hi</div>");
+        
+      }
+      i += 1;
+    }
+
+    
+  });
+})
 
 module.exports = router;
