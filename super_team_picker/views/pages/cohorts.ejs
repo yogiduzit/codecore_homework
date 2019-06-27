@@ -1,0 +1,13 @@
+<%-include('../partials/header')%>
+<%-include('../partials/navbar')%>
+  <section class= "cohorts-container">
+    
+  
+  <% for (let cohort in orderedCohorts) { %>
+      <div class="cohort-container-<%=cohort %> border">
+      <h1 class = "h1"><%= cohort %> </h1>
+          <p><%= orderedCohorts[cohort].toString()%> </p>
+      </div>
+  <% } %>
+  </section>
+<%-include('../partials/footer')%>

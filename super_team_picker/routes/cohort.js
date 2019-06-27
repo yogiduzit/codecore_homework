@@ -43,15 +43,17 @@ router.get('/', (req, res) => {
   .from('members')
   .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
   .then(allMembersWithCohorts => {
-    const orderedMembers = {};
+    const orderedCohorts = {};
+
     for (let member of allMembersWithCohorts) {
-      if (!orderedMembers[member.cohort_name]) {
-        orderedMembers[member.cohort_name] = [member.name];
+      if (!orderedCohorts[member.cohort_name]) {
+        orderedCohorts[member.cohort_name] = [member.name];
       } else {
-        orderedMembers[member.cohort_name].push(member.name);
+        orderedCohorts[member.cohort_name].push(member.name);
       }
     }
-    res.render('pages/cohorts', orderedMembers);
+  
+    res.render('pages/cohorts', {orderedCohorts});
   });
 });
 

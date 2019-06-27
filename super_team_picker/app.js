@@ -26,4 +26,3 @@ const ADDRESS = 'localhost';
 app.listen(PORT, ADDRESS, () => {
   console.log(`Server listening on ${ADDRESS}:${PORT}`);
 });
-
