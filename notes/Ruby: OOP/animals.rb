@@ -14,7 +14,7 @@ class Animal
     puts "I'm walking"
   end
 end
-
+=begin
 class Dog < Animal
 
   def bark
@@ -34,3 +34,4 @@ class Cat < Animal
     puts "Fish is yummy"
   end
 end
+=end

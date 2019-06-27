@@ -1,7 +1,8 @@
 require './helper_methods.rb'
+require './animals.rb'
 
-class Cat
-  include HelperMethods
+class Cat < Animal
+   include HelperMethods
   
   def initialize(name)
     @name = name
@@ -15,9 +16,11 @@ class Cat
       puts "😿 😿 😿 😿 😿 😿"
     end
   end
+
+  
 end
 
-class Bird
+class Bird < Animal
   def initialize(name)
     @name = name
   end
@@ -25,8 +28,7 @@ end
 
 
 
-for i in 1..100
-  cat = Cat.new("Mew")
-  bird = Bird.new("Crowe")
-  cat.catch(bird)
-end
+
+
+cat = Cat.new("Catto")
+Cat.helper_methods(1..2)
