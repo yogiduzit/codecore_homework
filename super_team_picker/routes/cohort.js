@@ -5,10 +5,12 @@ const router = express.Router();
 
 router.use(express.urlencoded({extended: true}));
 
+// Get /new - Create a new cohort page
 router.get('/new', (req, res) => {
   res.render('pages/new');
 });
 
+// POST /new - Post the new cohort data
 router.post('/new', (req, res) => {
   knex
   .insert({
@@ -32,12 +34,25 @@ router.post('/new', (req, res) => {
     }
     res.redirect('/cohorts');
   });
-
-
-  
 });
+
+//
 router.get('/', (req, res) => {
-  res.send('<div>Cohorts</div>')
-})
+  knex
+  .select('cohort_name', 'members.name')
+  .from('members')
+  .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
+  .then(allMembersWithCohorts => {
+    const orderedMembers = {};
+    for (let member of allMembersWithCohorts) {
+      if (!orderedMembers[member.cohort_name]) {
+        orderedMembers[member.cohort_name] = [member.name];
+      } else {
+        orderedMembers[member.cohort_name].push(member.name);
+      }
+    }
+    res.render('pages/cohorts', orderedMembers);
+  });
+});
 
 module.exports = router;
