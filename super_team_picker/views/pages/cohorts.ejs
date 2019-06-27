@@ -6,8 +6,8 @@
   <% for (let cohort in orderedCohorts) { %>
       <div class="cohort-container-<%=cohort %> border">
         <div class="cohort-header">
-        <h1 class = "h1"><%= cohort %> </h1>
-        <img src= "<%=orderedCohorts[cohort].imgURL %>" alt="Cohort Image">
+        <img src= "<%=orderedCohorts[cohort].imgURL %>" alt="Cohort Image" class="cohort-prfl-img">
+        <h2 class = "cohort-heading h2"><%= cohort %> </h2>
         </div>
         <div class="cohort-body">
           <p class="members">
@@ -17,7 +17,7 @@
           </p>
         </div>
         <div class="cohort-footer">
-          <button class="btn btn-primary">Show</button>
+          <button class="btn btn-primary">Show Cohort</button>
         </div>
       </div>
   <% } %>
