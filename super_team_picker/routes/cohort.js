@@ -104,7 +104,6 @@ router.get('/:id', (req, res) => {
           }
 
           console.log(teams);
-          res.clearCookie("request");
           res.render('pages/cohort', {
             cohort, 
             request,
