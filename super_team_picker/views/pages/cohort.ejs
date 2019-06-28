@@ -37,9 +37,15 @@
         <input type="submit" class="btn btn-link border-primary text-primary assign-btn" value="Assign Teams">
       </form>
     </div>
-    <div class="cohort-footer">
+    <div class="cohort-teams">
      <% if (request) {%>
-     <h2><%= request.option %><h2>
+     <% for (let key in teams)  {%>
+      <ul class="team-<%= key %>">
+        <% for (let member of teams[key]) { %>
+          <li class = "team-member"><%= member %></li>
+        <% } %>
+      </ul>
+      <% } %>
      <% } %>
     </div>
   </div>
