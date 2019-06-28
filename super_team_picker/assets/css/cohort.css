@@ -47,7 +47,25 @@ body {
   height: 5vh;
   align-items: center;
 }
-
+.cohort-teams {
+  display: flex;
+  flex-flow: row wrap;
+  padding-top: 10px;
+}
+ul[class^="team"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40vw;
+  list-style: none;
+  padding: 0px;
+}
+.team-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .form-group {
   padding-top: 20px; 
 }
