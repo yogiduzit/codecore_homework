@@ -1,12 +1,12 @@
 <%-include('../partials/header')%>
-<link rel="stylesheet" href="css/cohorts.css">
+<link rel="stylesheet" href="../css/cohorts.css">
 <%-include('../partials/navbar')%>
   <section class= "cohorts-container p-3">
     
   <% let i = 0; for (let cohort in orderedCohorts) {  %>
       <div class="cohort-container-<%=cohort %> border">
         <div class="cohort-header">
-        <img src= "<%=orderedCohorts[cohort].imgURL %>" alt="Cohort Image" class="cohort-prfl-img">
+        <img src= "<%= orderedCohorts[cohort].imgURL %>" alt="Cohort Image" class="cohort-prfl-img">
         <h2 class = "cohort-heading h2"><%= cohort %> </h2>
         </div>
         <div class="cohort-body">
