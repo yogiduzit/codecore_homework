@@ -40,11 +40,14 @@
     <div class="cohort-teams">
      <% if (request) {%>
      <% for (let key in teams)  {%>
-      <ul class="team-<%= key %>">
-        <% for (let member of teams[key]) { %>
-          <li class = "team-member"><%= member %></li>
-        <% } %>
-      </ul>
+     <div class= "team-container py-2">
+     <h3 class="h3"><%= "Team - " + key %></h3>
+        <ul class="team-<%= key %>">
+          <% for (let member of teams[key]) { %>
+            <li class = "team-member"><%= member %></li>
+          <% } %>
+        </ul>
+      </div>
       <% } %>
      <% } %>
     </div>
