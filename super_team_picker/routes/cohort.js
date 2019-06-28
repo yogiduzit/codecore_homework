@@ -103,7 +103,6 @@ router.get('/:id', (req, res) => {
             break;
           }
 
-          console.log(teams);
           res.render('pages/cohort', {
             cohort, 
             request,
@@ -124,11 +123,12 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/:id', (req, res) => {
- 
 
   res.cookie("request", JSON.stringify(req.body));
   res.redirect('/cohorts/' + req.params.id);
+
 });
+
 
 function teamCount(totalTeams, students) {
   const orderedTeams = {};

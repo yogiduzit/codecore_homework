@@ -13,7 +13,16 @@
         <%= member + ", " %>
         <% } %>
       </p>
+      <div class= "cohort-buttons">
+      <form action="" _method="DELETE">
+        <input type="submit" class="btn btn-link text-primary border-primary" value="Delete Cohort">
+      </form>
+      <form action="" _method="DELETE">
+        <input type="submit" class="btn btn-link text-primary border-primary" value="Edit Cohort">
+      </form>
     </div>
+    </div>
+  
     <div class="cohort-form">
       <h6 class="h6">Method</h6>
       <form action="/cohorts/<%= cohort.id %>" method="POST">
