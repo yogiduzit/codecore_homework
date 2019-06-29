@@ -31,7 +31,8 @@ router.post('/new', (req, res) => {
         knex
           .insert({
             name: member.trim(),
-            cohort_name: req.body.cohortName
+            cohort_name: req.body.cohortName,
+            cohort_id: cohort.id
           })
           .into('members')
           .returning('*')
@@ -46,39 +47,42 @@ router.post('/new', (req, res) => {
 //
 router.get('/', (req, res) => {
   knex
-    .select('*')
+    .select('*', 'cohorts.id', 'members.name')
     .from('members')
     .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
     .then(allMembersWithCohorts => {
-      console.log(allMembersWithCohorts.length);
+
       if (allMembersWithCohorts.length > 0) {
+        console.log(allMembersWithCohorts);
+        const orderedCohorts = {};
 
-      const orderedCohorts = {};
+        let i = 0;
+        for (let member of allMembersWithCohorts) {
+          if (!orderedCohorts[member.cohort_name]) {
 
-      let i = 0;
-      for (let member of allMembersWithCohorts) {
-        if (!orderedCohorts[member.cohort_name]) {
-          orderedCohorts[member.cohort_name] = {
-            members: [member.name],
-            imgURL: member.imgURL,
-            id: member.cohorts.id
-          };
-        } else {
-          orderedCohorts[member.cohort_name]["members"].push(member.name);
+            orderedCohorts[member.cohort_name] = {
+              members: [member.name],
+              imgURL: member.imgURL,
+              id: member.cohort_id
+            };
+          } else {
+            orderedCohorts[member.cohort_name]["members"].push(member.name);
+          }
+
+          if (i == allMembersWithCohorts.length - 1) {
+            console.log(orderedCohorts);
+            res.render('pages/cohorts', {
+              orderedCohorts
+            });
+          }
+          i += 1;
         }
-
-        if (i == allMembersWithCohorts.length - 1) {
-          
-          res.render('pages/cohorts', {
-            orderedCohorts
-          });
-        }
-        i += 1;
+      } else {
+        res.render("pages/cohorts", {
+          orderedCohorts: undefined
+        })
       }
-    } else {
-        res.render("pages/cohorts", {orderedCohorts: undefined})
-    }
-  });
+    });
 });
 
 router.get('/:id', (req, res) => {
@@ -88,50 +92,60 @@ router.get('/:id', (req, res) => {
     .where('cohorts.id', req.params.id)
     .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
     .then(cohortMembers => {
-      const cohort = {
-        members: []
-      };
-      let i = 0;
-      for (let member of cohortMembers) {
-        cohort["members"].push(member.name);
+      if (cohortMembers.length > 0) {
+        const cohort = {
+          members: []
+        };
+        let i = 0;
+        for (let member of cohortMembers) {
+          cohort["members"].push(member.name);
 
-        if (i == cohortMembers.length - 1) {
-          cohort["cohortName"] = member.cohort_name;
-          cohort["id"] = req.params.id;
-          cohort["imgURL"] = member.imgURL
+          if (i == cohortMembers.length - 1) {
+            cohort["cohortName"] = member.cohort_name;
+            cohort["id"] = req.params.id;
+            cohort["imgURL"] = member.imgURL
 
-          if (req.cookies.request) {
-          let request = JSON.parse(req.cookies.request);
-          let teams; 
-          switch(request.option) {
-            case "teamCount":
-              teams = methods.teamCount(request.quantity, methods.randomize(cohort["members"]));
-            break;
-            case "numPerTeams":
-              teams = methods.numPerTeams(request.quantity, methods.randomize(cohort["members"]));
-            break;
+            if (req.cookies.request) {
+              let request = JSON.parse(req.cookies.request);
+              res.clearCookie('request');
+              let teams;
+              switch (request.option) {
+                case "teamCount":
+                  teams = methods.teamCount(request.quantity, methods.randomize(cohort["members"]));
+                  break;
+                case "numPerTeams":
+                  teams = methods.numPerTeams(request.quantity, methods.randomize(cohort["members"]));
+                  break;
+              }
+
+              res.render('pages/cohort', {
+                cohort,
+                request,
+                teams
+              });
+            } else {
+              res.render('pages/cohort', {
+                cohort,
+                request: undefined,
+                teams: undefined
+              });
+            }
+
           }
-
-          res.render('pages/cohort', {
-            cohort, 
-            request,
-            teams
-          });
-        } else {
-          res.render('pages/cohort', {
-            cohort,
-            request: undefined,
-            teams: undefined
-          });
+          i += 1;
         }
-        
-        }
-        i += 1;
+      } else {
+        res.render('pages/cohort', {
+          cohort: undefined,
+          request: undefined,
+          teams: undefined
+        })
       }
     });
 });
 
 router.post('/:id/teams', (req, res) => {
+
   const id = req.params.id;
   res.cookie("request", JSON.stringify(req.body));
   res.redirect('/cohorts/' + req.params.id);
@@ -144,21 +158,20 @@ router.delete('/:id/:name', (req, res) => {
   const name = req.params.name;
 
   knex('cohorts')
-  .where('id', id)
-  .del()
-  .then(() => {
-    knex('members')
-    .where('cohort_name', name)
+    .where('id', id)
     .del()
     .then(() => {
-      res.redirect('/cohorts');
-    })
-  });
-
+      knex('members')
+        .where('cohort_name', name)
+        .del()
+        .then(() => {
+          res.redirect('/cohorts');
+        })
+    });
 
 });
 
-router.get('/:id/edit/', (req, res) => {
+router.get('/:id/edit', (req, res) => {
   const id = req.params.id;
   knex
     .select('cohort_name', 'members.name', "imgURL")
@@ -182,12 +195,12 @@ router.get('/:id/edit/', (req, res) => {
           i += 1;
         }
         res.render('pages/edit', cohort);
-        
-    } else {
-      res.send("<h1>No cohort found 😿");
-    }
-  });
-      
+
+      } else {
+        res.send("<h1>No cohort found 😿");
+      }
+    });
+
 });
 
 router.patch('/:id', (req, res) => {
