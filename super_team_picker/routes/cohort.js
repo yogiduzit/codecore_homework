@@ -4,6 +4,8 @@ const knex = require('../db/client');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 
+const methods = require('../functions.js');
+
 router.use(cookieParser());
 
 router.use(express.urlencoded({
@@ -44,10 +46,13 @@ router.post('/new', (req, res) => {
 //
 router.get('/', (req, res) => {
   knex
-    .select('cohort_name', 'members.name', "imgURL")
+    .select('*')
     .from('members')
     .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
     .then(allMembersWithCohorts => {
+      console.log(allMembersWithCohorts.length);
+      if (allMembersWithCohorts.length > 0) {
+
       const orderedCohorts = {};
 
       let i = 0;
@@ -55,7 +60,8 @@ router.get('/', (req, res) => {
         if (!orderedCohorts[member.cohort_name]) {
           orderedCohorts[member.cohort_name] = {
             members: [member.name],
-            imgURL: member.imgURL
+            imgURL: member.imgURL,
+            id: member.cohorts.id
           };
         } else {
           orderedCohorts[member.cohort_name]["members"].push(member.name);
@@ -69,8 +75,10 @@ router.get('/', (req, res) => {
         }
         i += 1;
       }
-
-    });
+    } else {
+        res.render("pages/cohorts", {orderedCohorts: undefined})
+    }
+  });
 });
 
 router.get('/:id', (req, res) => {
@@ -90,16 +98,17 @@ router.get('/:id', (req, res) => {
         if (i == cohortMembers.length - 1) {
           cohort["cohortName"] = member.cohort_name;
           cohort["id"] = req.params.id;
+          cohort["imgURL"] = member.imgURL
 
           if (req.cookies.request) {
           let request = JSON.parse(req.cookies.request);
           let teams; 
           switch(request.option) {
             case "teamCount":
-              teams = teamCount(request.quantity, randomize(cohort["members"]));
+              teams = methods.teamCount(request.quantity, methods.randomize(cohort["members"]));
             break;
             case "numPerTeams":
-              teams = numPerTeams(request.quantity, randomize(cohort["members"]));
+              teams = methods.numPerTeams(request.quantity, methods.randomize(cohort["members"]));
             break;
           }
 
@@ -122,70 +131,70 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/:id', (req, res) => {
-
+router.post('/:id/teams', (req, res) => {
+  const id = req.params.id;
   res.cookie("request", JSON.stringify(req.body));
   res.redirect('/cohorts/' + req.params.id);
 
 });
 
 
-function teamCount(totalTeams, students) {
-  const orderedTeams = {};
+router.delete('/:id/:name', (req, res) => {
+  const id = req.params.id;
+  const name = req.params.name;
 
-  const remainMems = students.length % totalTeams;
-  const memsPerTeam = Math.floor(students.length / totalTeams);
+  knex('cohorts')
+  .where('id', id)
+  .del()
+  .then(() => {
+    knex('members')
+    .where('cohort_name', name)
+    .del()
+    .then(() => {
+      res.redirect('/cohorts');
+    })
+  });
 
-  for (let i = 0; i < totalTeams; i++) {
-    orderedTeams[i.toString()] = [];
-    for (let j = 0; j < memsPerTeam; j++) {
-      orderedTeams[i.toString()].push(students[i * memsPerTeam + j]);
+
+});
+
+router.get('/:id/edit/', (req, res) => {
+  const id = req.params.id;
+  knex
+    .select('cohort_name', 'members.name', "imgURL")
+    .from('members')
+    .where('cohorts.id', req.params.id)
+    .innerJoin('cohorts', 'members.cohort_name', 'cohorts.name')
+    .then(cohortMembers => {
+      if (cohortMembers) {
+        const cohort = {
+          members: []
+        };
+        let i = 0;
+        for (let member of cohortMembers) {
+          cohort["members"].push(member.name);
+
+          if (i == cohortMembers.length - 1) {
+            cohort["cohortName"] = member.cohort_name;
+            cohort["id"] = req.params.id;
+            cohort["imgURL"] = member.imgURL;
+          }
+          i += 1;
+        }
+        res.render('pages/edit', cohort);
+        
+    } else {
+      res.send("<h1>No cohort found 😿");
     }
-  }
-  for (let i = remainMems; i > 0; i--) {
-    orderedTeams[i.toString()].push(students[students.length - i]);
-  }
-  return orderedTeams;
-}
+  });
+      
+});
 
-function numPerTeams(perTeam, students) {
-  const orderedTeams = {};
+router.patch('/:id', (req, res) => {
+  console.log("Patch");
+  res.redirect('/cohorts');
+});
 
-  const totalTeams = Math.floor(students.length / perTeam);
-  const remainMems = students.length % perTeam;
 
-  for (let i = 0; i < totalTeams; i++) {
-    orderedTeams[i.toString()] = [];
-    for (let j = 0; j < perTeam; j++) {
-      if (students[i * perTeam + j]) {
-        orderedTeams[i.toString()].push(students[i * perTeam + j]);
-      }
-    }
-  }
-  if (remainMems > totalTeams) {
-    orderedTeams[totalTeams.toString()] = [];
-    for (let i = remainMems; i >= 1; i--) {
-      orderedTeams[totalTeams.toString()].push(students[students.length - i])
-    }
-  } else {
-    for (let i = remainMems; i >= 1; i--) {
-      //orderedTeams[(remainMems - i - 1).toString()].push(students[students.length - i]);
-      console.log(remainMems - i);
-    }
-  }
-  return orderedTeams;
-}
-
-function randomize(arr) {
-  const newArr = arr.slice(0);
-  for (let i = 0; i < newArr.length; i++) {
-    let randomIndex = Math.floor(Math.random() * i);
-    let tempValue = newArr[i];
-
-    newArr[i] = newArr[randomIndex];
-    newArr[randomIndex] = tempValue;
-  }
-  return newArr;
-}
 
 module.exports = router;
