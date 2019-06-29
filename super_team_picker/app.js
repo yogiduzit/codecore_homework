@@ -7,10 +7,11 @@ const cohortRouter = require('./routes/cohort');
 
 const app = express();
 
-app.use('/cohorts', cohortRouter);
+
 
 // Logs all the request to console
 app.use(logger("dev"));
+
 
 // Allows arrays, JSON objects to be used in request bodies if true
 app.use(express.urlencoded({extended: true}));
@@ -20,6 +21,17 @@ app.use(express.static("assets"));
 app.set('views', "views")
 app.set("view engine", "ejs");
 
+
+app.use(
+  methodOverride((req, res) => {
+    if (req.body && req.body._method) {
+      const method = req.body._method
+      return method;
+    }
+  })
+);
+
+app.use('/cohorts', cohortRouter);
 const PORT = 3000;
 const ADDRESS = 'localhost';
 
