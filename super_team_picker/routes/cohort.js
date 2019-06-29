@@ -153,16 +153,15 @@ router.post('/:id/teams', (req, res) => {
 });
 
 
-router.delete('/:id/:name', (req, res) => {
+router.delete('/:id', (req, res) => {
   const id = req.params.id;
-  const name = req.params.name;
 
   knex('cohorts')
     .where('id', id)
     .del()
     .then(() => {
       knex('members')
-        .where('cohort_name', name)
+        .where('cohort_id', id)
         .del()
         .then(() => {
           res.redirect('/cohorts');
@@ -194,10 +193,10 @@ router.get('/:id/edit', (req, res) => {
           }
           i += 1;
         }
-        res.render('pages/edit', cohort);
+        res.render('pages/edit', {cohort});
 
       } else {
-        res.send("<h1>No cohort found 😿");
+        res.send("pages/edit", {cohort: undefined});
       }
     });
 
