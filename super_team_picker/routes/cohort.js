@@ -53,7 +53,6 @@ router.get('/', (req, res) => {
     .then(allMembersWithCohorts => {
 
       if (allMembersWithCohorts.length > 0) {
-        console.log(allMembersWithCohorts);
         const orderedCohorts = {};
 
         let i = 0;
@@ -70,7 +69,6 @@ router.get('/', (req, res) => {
           }
 
           if (i == allMembersWithCohorts.length - 1) {
-            console.log(orderedCohorts);
             res.render('pages/cohorts', {
               orderedCohorts
             });
@@ -193,20 +191,70 @@ router.get('/:id/edit', (req, res) => {
           }
           i += 1;
         }
-        res.render('pages/edit', {cohort});
+        res.render('pages/edit', {
+          cohort
+        });
 
       } else {
-        res.send("pages/edit", {cohort: undefined});
+        res.send("pages/edit", {
+          cohort: undefined
+        });
       }
     });
 
 });
 
 router.patch('/:id', (req, res) => {
-  console.log("Patch");
-  res.redirect('/cohorts');
-});
 
+  const id = req.params.id;
+
+  const members = req.body.members.split(', ');
+
+  const newCohort = {
+    name: req.body.cohortName,
+    imgURL: req.body.imgURL
+  }
+
+  knex('cohorts')
+    .where('id', id)
+    .update(newCohort)
+    .returning('*')
+    .then((updatedRows) => {
+
+      knex('members')
+      .where('cohort_id', id)
+      .del()
+      .then(() => {
+        let i = 0;
+        for (let member of members) {
+
+          const newMember = {
+            name: member,
+            cohort_id: id,
+            cohort_name: newCohort.name
+          }
+          i += 1;
+          knex
+          .insert(newMember)
+          .into('members')
+          .returning('*')
+          .then(() => {});
+
+          if (i == members.length - 1) {
+            res.redirect('/cohorts');
+          }
+        }
+        
+      });
+    });
+
+  // if (updatedRows.length) {
+
+  //   res.render('cohorts/show', {cohort: updatedRows[0]});
+  // }
+
+
+});
 
 
 module.exports = router;
