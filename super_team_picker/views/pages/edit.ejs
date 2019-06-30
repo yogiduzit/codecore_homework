@@ -2,7 +2,7 @@
 <%-include('../partials/navbar')%>
 <section class="p-3">
   <% if (cohort) {%>
-  <form method="POST" action="/cohorts/<%= cohort.id%>">
+  <form action="/cohorts/<%= cohort.id%>" method="POST" >
     <div class="form-group" >
       <label for="inputURL">Logo URL</label>
       <input type="text" name="imgURL" class="form-control" id="exampleInputEmail1" value="<%= cohort.imgURL %>">
