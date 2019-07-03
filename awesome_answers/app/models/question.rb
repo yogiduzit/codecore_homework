@@ -6,12 +6,12 @@ class Question < ApplicationRecord
   # Custom validation
   # Use singular method names for custom validations.
   validate :no_monkey
-  before_validation(:set_default_view_count)
+  before_validation(:set_default_like_count)
 
   # Creating a scope with a class method
-  def self.recent
-    order(created_at: desc).limit(10)
-  end
+  # def self.recent
+  #   order(created_at: desc).limit(10)
+  # end
 
   # Scopes can also be created by just passing a name and lambda
   # function to them.
@@ -36,8 +36,8 @@ class Question < ApplicationRecord
 
   end
 
-  def set_default_view_count
-    self.view_count ||= 0
+  def set_default_like_count
+    self.like_count ||= 0
   end
 
 end
