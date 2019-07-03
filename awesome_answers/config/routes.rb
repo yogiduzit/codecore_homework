@@ -5,11 +5,19 @@ Rails.application.routes.draw do
   # root domain, run the index action of WelcomeController.
   get('/', {to: 'welcome#index', as:'root'});
   get '/contacts/new', {to: 'contacts#new' };
-  get('/questions/new', {to: 'questions#new', as: 'new_question'})
+
+  get '/questions/new', {to: 'questions#new', as: :new_question}
+
+  get '/questions/:id', {to: 'questions#show', as: :question}
+  get '/questions', {to: 'questions#index', as: :questions}
+  get '/questions/:id/edit', {to: 'questions#edit', as: :edit_question}
 
   # Handles the creation of new contacts
   post '/contacts', {to: 'contacts#create'}
-  post 'questions', {to: 'questions#create', as: :questions}
 
+  post '/questions', {to: 'questions#create'}
+
+  # Update question
+  patch '/questions/:id', {to: 'questions#update'}
   
 end
