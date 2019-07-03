@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
   end
+
   def create
     p params
     # Rails does not allow us to access question via params simply
@@ -11,6 +12,34 @@ class QuestionsController < ApplicationController
     # SQL injection
     # Hence, we only permit title and body as keys
     @question = Question.new params.require(:question).permit(:title, :body)
-    @question.save!
+
+    if @question.save
+      redirect_to_question_path(@question)
+    else
+      render :new
+    end
+  end
+
+  def show
+    @question = Question.find(params["id"])
+  end
+
+  def index
+    @questions = Question.all
+  end
+
+  def edit
+    @question = Question.find(params['id'])
+  end
+
+  def update
+    question_params = params.require(:question).permit(:title, :body)
+    @question = Question.find params[:id]
+
+    if @question.update question_params
+      redirect_to question_path(@question)
+    else
+      render :edit
+    end
   end
 end
