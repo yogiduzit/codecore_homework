@@ -7,20 +7,30 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # To run your seeds, do:
-Question.delete_all
+Answer.delete_all
+Question.destroy_all
 
 NUM_QUESTIONS = 200
 
 NUM_QUESTIONS.times do 
   created_at = Faker::Date.backward(365 * 5)
-  Question.create(
+  q = Question.create(
     title: Faker::Hacker.say_something_smart, 
     body: Faker::ChuckNorris,
+    like_count: rand(40),
     created_at: created_at,
     updated_at: created_at
     )
+    if q.valid?
+      q.answers = rand(0..15).times.map do
+        Answer.new(body: Faker::GreekPhilosophers.quote)
+      end
+    end
   end
+  
 
   question = Question.all
+  answer = Answer.all
 
-  puts(Cowsay.say("Generated #{question.count}", :frogs))
+  puts(Cowsay.say("Generated #{question.count} questions", :frogs))
+  puts(Cowsay.say("Generated #{answer.count} answers", :frogs))
