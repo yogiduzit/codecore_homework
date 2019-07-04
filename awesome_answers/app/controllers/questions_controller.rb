@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
     @question = Question.new params.require(:question).permit(:title, :body)
 
     if @question.save
-      redirect_to_question_path(@question)
+      redirect_to question_path(@question)
     else
       render :new
     end
@@ -22,6 +22,8 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params["id"])
+    @answer = Answer.new
+    @answers = @question.answers.order(created_at: :desc)
   end
 
   def index
