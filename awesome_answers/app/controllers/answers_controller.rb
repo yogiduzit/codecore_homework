@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   # This file was created with the command rails g controller answers --skip-template-engine
-  # This just skips the creation of views/answers folder.
+  # which skips the creation of views/answers folder.
   
   def create
     @answer = Answer.new answer_params

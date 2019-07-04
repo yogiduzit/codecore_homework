@@ -13,6 +13,8 @@ Question.destroy_all
 NUM_QUESTIONS = 200
 
 NUM_QUESTIONS.times do 
+  # Faker is an application used to create fake data
+  
   created_at = Faker::Date.backward(365 * 5)
   q = Question.create(
     title: Faker::Hacker.say_something_smart, 

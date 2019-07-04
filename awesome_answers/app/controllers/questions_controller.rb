@@ -23,6 +23,9 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params["id"])
     @answer = Answer.new
+
+    # Returns an array containing all the answers related to 
+    # this question
     @answers = @question.answers.order(created_at: :desc)
   end
 
