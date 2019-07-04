@@ -19,5 +19,11 @@ Rails.application.routes.draw do
 
   # Update question
   patch '/questions/:id', {to: 'questions#update'}
+
+  resources :questions do 
+    # Passing into a block appends /question
+    # to the route
+    resources :answers, only: [:create, :destroy]
+  end
   
 end
