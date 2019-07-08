@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # This defines a route that says on a GET request to the
   # root domain, run the index action of WelcomeController.
-  get('/', {to: 'welcome#index', as:'root'});
+  get('/', {to: 'welcome#index', as:'root' });
   get '/contacts/new', {to: 'contacts#new' };
 
   get '/questions/new', {to: 'questions#new', as: :new_question}
@@ -25,5 +25,8 @@ Rails.application.routes.draw do
     # to the route
     resources :answers, only: [:create, :destroy]
   end
+
+  resources :users, only: [:new, :create]
+  resource :sessions, only: [:new, :create, :destroy]
   
 end

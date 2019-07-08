@@ -7,6 +7,7 @@ class Question < ApplicationRecord
   # question to NULL.
   has_many(:answers, dependent: :destroy)
 
+  belongs_to :user
   # To check if a question is present and has a unique title.
   validates(:title, presence:true, uniqueness: true);
 

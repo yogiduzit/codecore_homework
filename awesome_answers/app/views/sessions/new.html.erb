@@ -1,0 +1,15 @@
+<h1>Sign In</h1>
+
+<%# Since we don't have a sessions model that stores to database we will use a simple
+ form_tag instead of form_with or form_for 
+ %>
+<%= form_tag sessions_path do %>
+  <%= label_tag :email %>
+  <%= email_field_tag :email %>
+  </div>
+  <div>
+  <%= label_tag :password %>
+  <%= password_field_tag :password %>
+  </div>
+  <%= submit_tag "Log In" %>
+<% end %>
