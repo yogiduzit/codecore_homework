@@ -6,8 +6,8 @@ class Question < ApplicationRecord
   # it will change the id's of the answers related to the deleted
   # question to NULL.
   has_many(:answers, dependent: :destroy)
-
   belongs_to :user
+  
   # To check if a question is present and has a unique title.
   validates(:title, presence:true, uniqueness: true);
 

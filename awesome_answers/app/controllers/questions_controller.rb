@@ -1,5 +1,9 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show] 
+  before_action :authenticate_user, except: [:index, :show] 
+
+  # Only the question's owner can edit or delete the question.
+  before_action :authorize!, only: [:edit, :update, :destroy]
+
   def new
     @question = Question.new
   end

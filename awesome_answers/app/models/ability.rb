@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# Created using rails g cancan:ability
 class Ability
   include CanCan::Ability
 
@@ -30,5 +30,23 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+
+    # Create, Read, Update, Delete can be easily accessed through this crud
+    # string.
+    alias_action :create, :read, :update, :destroy, to: :crud
+    
+    # On a particular question, if the current_user is same as the question's owner
+    # then give them the ability to CRUD.
+    can(:crud, Question) do |question|
+      question.user = user
+    end
+
+    can(:crud, Answer) do |answer|
+      answer.user = user
+    end
+
+    if user.is_admin?
+      can :manage, :all
+    end
   end
 end

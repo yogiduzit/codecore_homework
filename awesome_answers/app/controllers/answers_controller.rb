@@ -1,6 +1,8 @@
 class AnswersController < ApplicationController
   # This file was created with the command rails g controller answers --skip-template-engine
   # which skips the creation of views/answers folder.
+
+  before_action :authorize!, only: :destroy
   
   def create
     @answer = Answer.new answer_params
@@ -17,11 +19,18 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = Answer.find(params["id"])
-    @answer.destroy
+
+    if can?(:crud, @answer)
+      @answer.destroy
+      redirect_to question_path(@answer.question)
+    else
+      head :unauthorized 
+    end
+    
 
     # This answer has been destroyed in the database but still exists
     # in this variable
-    redirect_to question_path(@answer.question)
+    
 
   end
 
