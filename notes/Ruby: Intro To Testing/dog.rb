@@ -3,9 +3,11 @@ class Dog
     @bones = []
   end
 
+  attr_reader :bones 
+
   def give_bone(bone)
     if @bones.length >= 3
-      puts "Too many bones for me, urgh"
+      raise ArgumentError.new "Too many bones for me, urgh"
     else
       @bones.push(bone)
     end
