@@ -28,5 +28,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create]
   resource :sessions, only: [:new, :create, :destroy]
+
+  resources :job_posts, only: [:new, :create, :show, :destroy]
   
 end

@@ -47,7 +47,7 @@ RSpec.describe JobPost, type: :model do
         description: "Doing Something"
       )
       job_post_c = JobPost.create(
-        title: "Agile Developer",
+        title: "Developer",
         description: "Creating software"
       )
       # When
@@ -55,7 +55,7 @@ RSpec.describe JobPost, type: :model do
       softwares = JobPost.search("software")
       # End
 
-      expect(softwares).to(eq([job_post_c, job_post_a]))
+      expect(softwares).to(eq([job_post_a, job_post_c]))
     end
   end
 end
