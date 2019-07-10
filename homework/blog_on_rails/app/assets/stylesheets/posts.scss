@@ -2,7 +2,26 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// Extends
+%flex-column-align-c-justify-fs {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .home-wallpaper {
-  width: 80vw;
-  height: 50%;
+  width: 64vmin;
+  height: 40vmin;
+}
+
+.container {
+  padding: 10px;
+  display: flex;
+  @extend %flex-column-align-c-justify-fs;
+  flex: 1;
 }
