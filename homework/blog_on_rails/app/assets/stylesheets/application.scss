@@ -11,14 +11,16 @@
  * It is generally better to create a new file per style scope.
  */
 
- 
+  /* 
+  *= require_main
+  *= require_posts
+  *= require_tree .
+  *= require_self
+  */
 
  @import "bootstrap";
 
  @import "main";
  @import 'posts.scss';
 
-  /* 
-  *= require_tree .
-  *= require_self
-  */
+
