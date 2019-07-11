@@ -13,10 +13,16 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
+
 .home-wallpaper {
   width: 64vmin;
   height: 40vmin;
+}
+
+.navbar {
+  width: 100%;
 }
 
 .container {
@@ -24,4 +30,47 @@ body {
   display: flex;
   @extend %flex-column-align-c-justify-fs;
   flex: 1;
+}
+
+.new-form-container {
+  width: 65vw;
+  padding: 10px;
+  margin-top: 2%;
+  @extend %flex-column-align-c-justify-fs;
+}
+
+.form-control {
+  width: 60vw;
+}
+.new-post-heading {
+  text-align: center;
+}
+
+.posts-container { 
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+.post-container {
+  @extend %flex-column-align-c-justify-fs
+}
+@media only screen and (min-width: 320px) and (max-width: 576px) {
+  .post-container {
+    width: 90vw;
+  }
+}
+@media only screen and (min-width: 577px) and (max-width: 992px) {
+  .post-container {
+    width: 48vw;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
+  .post-container {
+    width: 31vw;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .post-container {
+    width: 23vw;
+  }
 }
