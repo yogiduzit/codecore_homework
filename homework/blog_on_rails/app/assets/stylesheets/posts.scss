@@ -4,9 +4,16 @@
 
 // Extends
 %flex-column-align-c-justify-fs {
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+}
+
+%flex-rw-align-fs-justify-sa {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
 }
 
 body {
@@ -27,7 +34,6 @@ body {
 
 .container {
   padding: 10px;
-  display: flex;
   @extend %flex-column-align-c-justify-fs;
   flex: 1;
 }
@@ -39,20 +45,41 @@ body {
   @extend %flex-column-align-c-justify-fs;
 }
 
-.form-control {
-  width: 60vw;
-}
 .new-post-heading {
   text-align: center;
 }
 
 .posts-container { 
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+  @extend %flex-rw-align-fs-justify-sa;
+  margin-top: 20px;
+  padding: 10px;
 }
 .post-container {
-  @extend %flex-column-align-c-justify-fs
+  @extend %flex-column-align-c-justify-fs;
+  text-align: left;
+  border: 1px solid grey;
+  padding: 5px;
+  border-radius: 2%;
+  margin-top: 2%;
+}
+.comments {
+  display: flex;
+  justify-content: space-between;
+}
+.form-group {
+  width: 45vw;
+}
+.comment-form {
+  padding: 20px;
+}
+.comments-container {
+  @extend %flex-column-align-c-justify-fs;
+  width: 40vw;
+}
+.comment-container {
+  width: 30vw;
+  border-radius: 4px;
+  margin-top: 3px;
 }
 @media only screen and (min-width: 320px) and (max-width: 576px) {
   .post-container {
@@ -61,12 +88,12 @@ body {
 }
 @media only screen and (min-width: 577px) and (max-width: 992px) {
   .post-container {
-    width: 48vw;
+    width: 43vw;
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1440px) {
   .post-container {
-    width: 31vw;
+    width: 30vw;
   }
 }
 @media only screen and (min-width: 1440px) {

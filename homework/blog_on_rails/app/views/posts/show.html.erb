@@ -5,30 +5,32 @@
     <small>Posted <%= time_ago_in_words @post.created_at %> ago</small>
   </div>
   <div class="post-modify-btn">
-    <%= link_to "Edit", edit_post_path(@post) %>
-    <%= link_to "Delete", post_path(@post), method: :delete %>
+    <%= link_to "Edit", edit_post_path(@post), class: "btn btn-light border-primary" %>
+    <%= link_to "Delete", post_path(@post), method: :delete, class: "btn btn-light border-primary" %>
   </div>
-  <div class="comment-form">
-    <h2 class="h2">Create Comment</h2>
-    <%= form_with model: [@post, @comment], local: true do |form| %>
-      <div class="form-group">
-        <%= form.label :body %>
-        <%= form.text_field :body, class: "form-control" %>
-      </div>
-      <%= form.submit class: "btn btn-primary" %>
-    <% end %>
-  </div>
-  
-  <% if !@comments.nil? %>
-    <div class="comments-container">  
-      <% @comments.each do |comment| %>
-        <div class="comment-container border ">
-          <p><%= comment.body %></p>
-          <p><%= time_ago_in_words(comment.created_at) %></p>
-          <%= link_to "Delete", post_comment_path(@post, comment), method: :delete %>
+  <section class="comments">
+    <div class="comment-form">
+      <h2 class="h2">Create Comment</h2>
+      <%= form_with model: [@post, @comment], local: true do |form| %>
+        <div class="form-group">
+          <%= form.label :body %>
+          <%= form.text_area :body,cols: "20", rows: "2", class: "form-control" %>
         </div>
+        <%= form.submit class: "btn btn-primary" %>
       <% end %>
     </div>
-  <% end %>
-
+    
+    <% if !@comments.nil? %>
+      <div class="comments-container">
+        <h4 class="h4">Comments</h4>  
+        <% @comments.each do |comment| %>
+          <div class="comment-container border ">
+            <p><%= comment.body %></p>
+            <small><%= time_ago_in_words(comment.created_at) + " \u2022 " %>
+            <%= link_to "Delete", post_comment_path(@post, comment), method: :delete %></small>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
 </div>
