@@ -22,6 +22,9 @@ class PostsController < ApplicationController
 
   def show
     @post = find_post
+    @comment = Comment.new
+
+    @comments = Comment.all
     # p time_ago_in_words @post["created_at"] =>  This is a helper so it can be only used in the views file
   end
 
