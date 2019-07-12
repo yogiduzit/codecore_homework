@@ -9,6 +9,26 @@
     <%= link_to "Delete", post_path(@post), method: :delete %>
   </div>
   <div class="comment-form">
+    <h2 class="h2">Create Comment</h2>
+    <%= form_with model: [@post, @comment], local: true do |form| %>
+      <div class="form-group">
+        <%= form.label :body %>
+        <%= form.text_field :body, class: "form-control" %>
+      </div>
+      <%= form.submit class: "btn btn-primary" %>
+    <% end %>
   </div>
-  <div class="comments-container">
+  
+  <% if !@comments.nil? %>
+    <div class="comments-container">  
+      <% @comments.each do |comment| %>
+        <div class="comment-container border ">
+          <p><%= comment.body %></p>
+          <p><%= time_ago_in_words(comment.created_at) %></p>
+          <%= link_to "Delete", post_comment_path(@post, comment), method: :delete %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
 </div>
