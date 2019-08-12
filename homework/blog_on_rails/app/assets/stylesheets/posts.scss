@@ -1,0 +1,103 @@
+// Place all the styles related to the posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Extends
+%flex-column-align-c-justify-fs {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+%flex-rw-align-fs-justify-sa {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-wallpaper {
+  width: 64vmin;
+  height: 40vmin;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.container {
+  padding: 10px;
+  @extend %flex-column-align-c-justify-fs;
+  flex: 1;
+}
+
+.new-form-container {
+  width: 65vw;
+  padding: 10px;
+  margin-top: 2%;
+  @extend %flex-column-align-c-justify-fs;
+}
+
+.new-post-heading {
+  text-align: center;
+}
+
+.posts-container { 
+  @extend %flex-rw-align-fs-justify-sa;
+  margin-top: 20px;
+  padding: 10px;
+}
+.post-container {
+  @extend %flex-column-align-c-justify-fs;
+  text-align: left;
+  border: 1px solid grey;
+  padding: 5px;
+  border-radius: 2%;
+  margin-top: 2%;
+}
+.comments {
+  display: flex;
+  justify-content: space-between;
+}
+.form-group {
+  width: 45vw;
+}
+.comment-form {
+  padding: 20px;
+}
+.comments-container {
+  @extend %flex-column-align-c-justify-fs;
+  width: 40vw;
+}
+.comment-container {
+  width: 30vw;
+  border-radius: 4px;
+  margin-top: 3px;
+}
+@media only screen and (min-width: 320px) and (max-width: 576px) {
+  .post-container {
+    width: 90vw;
+  }
+}
+@media only screen and (min-width: 577px) and (max-width: 992px) {
+  .post-container {
+    width: 43vw;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
+  .post-container {
+    width: 30vw;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .post-container {
+    width: 23vw;
+  }
+}

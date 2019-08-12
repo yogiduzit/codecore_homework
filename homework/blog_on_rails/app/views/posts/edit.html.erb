@@ -1,0 +1,22 @@
+<div class="edit-form-container">
+  <h1 class="h1 new-post-heading">Edit Post</h1>
+  <% if @post.errors.messages.any? %>
+    <h4 class = "h4">Error log</h4>
+    <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <%= form_with model: @post, local: true do |form|%>
+    <div class="form-group title-input">
+      <%= form.label :title %>
+      <%= form.text_field :title, class: "form-control" %>
+    </div>
+    <div class="form-group body-input">
+      <%= form.label :body %>
+      <%= form.text_area :body, cols: "40", rows: "8", class: "form-control" %>
+    </div>
+    <%=  form.submit class: "btn btn-primary" %>
+  <% end %>
+</div>
